@@ -3,41 +3,35 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 import createPersistedState from "vuex-persistedstate";
-import Auth from "./modules/auth"
+import Auth from "./modules/auth";
 import Dashboard from "./modules/navigation/dashboard";
 import Clearance from "./modules/navigation/clearance";
-import Case from "./modules/navigation/case";
+import Enroll from "./modules/navigation/enroll";
 import Management from "./modules/navigation/management";
-import Media from "./modules/overview/all_media";
-import AccountSettings from "./modules/user_management/account_settings";
-import ArticleNotifications from "./modules/navigation/article_notifications";
-import VersionLogs from "./modules/navigation/version_logs";
 
+/* import Case from "./modules/navigation/case"; */
 
 const dataState = createPersistedState({
-  paths: [
-    'auth.auth.user',
-    'auth.auth.loggedIn'
-  ]
-})
+  paths: ["auth.auth.user", "auth.auth.loggedIn"],
+});
 
 export default new Vuex.Store({
   modules: {
     auth: {
       namespaced: true,
       modules: {
-        auth: Auth
-      }
+        auth: Auth,
+      },
     },
     navigation: {
       namespaced: true,
       modules: {
         dashboard: Dashboard,
         clearance: Clearance,
-        case: Case,
+        enroll: Enroll,
         management: Management,
       },
     },
   },
-  plugins: [dataState]
+  plugins: [dataState],
 });

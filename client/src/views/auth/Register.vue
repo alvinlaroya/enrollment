@@ -3,12 +3,14 @@
     <v-row align="center" justify="center" style="height: 90vh">
       <v-col cols="6">
         <v-card class="pa-6" style="text-align: center">
-          <img src="@/images/defemnhslogo.jpeg" style="width: 100px" alt="" /><br />
-          <span class="font-weight-bold" style="font-size: 21px"
-            >Login to Dashboard</span
-          >
+          <img
+            src="@/images/defemnhslogo.jpeg"
+            style="width: 80px"
+            alt=""
+          /><br />
           <v-card-subtitle
-            >Web-Based Enrolment System of Don Eufemio F. Eriguel Memorial National High School</v-card-subtitle
+            >Web-Based Enrolment System of Don Eufemio F. Eriguel Memorial
+            National High School</v-card-subtitle
           >
           <v-card-text class="mt-5">
             <v-container>
@@ -80,9 +82,7 @@
                           v-on="on"
                         ></v-text-field>
                       </template>
-                      <v-date-picker
-                        v-model="user.birthDate"
-                      ></v-date-picker>
+                      <v-date-picker v-model="user.birthDate"></v-date-picker>
                     </v-menu>
                   </v-col>
                   <v-col md="6">
@@ -94,7 +94,7 @@
                 </v-row>
                 <v-row class="mt-0">
                   <v-col cols="12">
-                    <v-select
+                    <!-- <v-select
                       v-model="user.address"
                       :items="addresses"
                       hint="Barangay of Agoo, La Union"
@@ -102,7 +102,12 @@
                       :rules="[(v) => !!v || 'Address is required']"
                       label="Address"
                       required
-                    ></v-select>
+                    ></v-select> -->
+                    <v-text-field
+                      v-model="user.address"
+                      :rules="[(v) => !!v || 'Address is required']"
+                      label="Address"
+                    ></v-text-field>
                   </v-col>
                 </v-row>
                 <v-btn tile color="success" block large @click="validate">
@@ -125,12 +130,7 @@
       {{ text }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="black"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="black" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -169,7 +169,7 @@ export default {
     password: "",
     passwordRules: [(v) => !!v || "Password is required"],
     snackbar: false,
-    text: 'My timeout is set to 2000.',
+    text: "My timeout is set to 2000.",
     timeout: 2000,
   }),
 
@@ -177,10 +177,10 @@ export default {
     ...mapActions(["getAddresses", "register"]),
     validate() {
       const valid = this.$refs.form.validate();
-      if(valid) this.register(this.user)
+      if (valid) this.register(this.user);
       this.$refs.form.reset();
-      this.snackbar = true
-      this.text = "Account Successfully Created"
+      this.snackbar = true;
+      this.text = "Account Successfully Created";
     },
     reset() {
       this.$refs.form.reset();
@@ -194,10 +194,9 @@ export default {
     ...mapGetters(["addresses"]),
   },
 
-
   mounted() {
-      this.getAddresses()
-  }
+    this.getAddresses();
+  },
 };
 </script>
 <style></style>

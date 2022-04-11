@@ -3,24 +3,28 @@
     <v-row align="center" justify="center" style="height: 90vh">
       <v-col cols="3">
         <v-card class="pa-6" style="text-align: center">
-          <img src="@/images/defemnhslogo.jpeg" style="width: 100px" alt="" /><br />
-          <span class="font-weight-bold" style="font-size: 21px"
-            >Login to Dashboard</span
-          >
-          <v-card-subtitle
-            >Web-Based Enrolment System of Don Eufemio F. Eriguel Memorial National High School</v-card-subtitle
+          <img
+            src="@/images/defemnhslogo.jpeg"
+            style="width: 80px"
+            alt=""
+          /><br />
+          <v-card-subtitle style="font-size: 13px; font-weight: bold"
+            >Web-Based Enrolment System of Don Eufemio F. Eriguel Memorial
+            National High School</v-card-subtitle
           >
 
-            <v-alert
-              v-if="hasLoginFail"
-              dense
-              class="ml-6 mr-6"
-              outlined
-              type="error"
-            >
-              Invalid <strong>credentials</strong> or maybe your account is not <strong>verified</strong>
-            </v-alert>
-          <v-card-text class="mt-5">
+          <v-alert
+            v-if="hasLoginFail"
+            dense
+            class="ml-6 mr-6"
+            outlined
+            type="error"
+            style="font-size: 13px"
+          >
+            Invalid <strong>email/password</strong> or account is not
+            <strong>verified</strong>
+          </v-alert>
+          <v-card-text class="mt-0">
             <v-container>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field
@@ -59,7 +63,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapGetters} = createNamespacedHelpers("auth");
+const { mapActions, mapGetters } = createNamespacedHelpers("auth");
 
 export default {
   data: () => ({
@@ -69,19 +73,17 @@ export default {
     emailRules: [
       (v) => !!v || "E-mail is required",
       (v) => (v && v.length <= 40) || "Name must be less than 40 characters",
-      (v) => /.+@.+\..+/.test(v) || "Email must be valid"
+      (v) => /.+@.+\..+/.test(v) || "Email must be valid",
     ],
     password: "",
-    passwordRules: [
-      (v) => !!v || "Password is required",
-    ],
+    passwordRules: [(v) => !!v || "Password is required"],
   }),
 
   methods: {
-      ...mapActions(["login"]),
+    ...mapActions(["login"]),
     validate() {
       const valid = this.$refs.form.validate();
-      if(valid) this.login({email: this.email, password: this.password})
+      if (valid) this.login({ email: this.email, password: this.password });
     },
     reset() {
       this.$refs.form.reset();
@@ -91,8 +93,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["hasLoginFail"])
-  }
+    ...mapGetters(["hasLoginFail"]),
+  },
 };
 </script>
 <style></style>

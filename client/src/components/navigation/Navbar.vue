@@ -2,21 +2,22 @@
   <div>
     <v-app-bar app dense id="navbar">
       <v-avatar :size="30">
-          <img
-            src="@/images/defemnhslogo.jpeg"
-            alt="John"
-          >
-        </v-avatar>
-      <v-toolbar-title style="font-size: 17px; margin-left: 10px; font-weight: bold">DEFEMNHS</v-toolbar-title>
+        <img src="@/images/defemnhslogo.jpeg" alt="John" />
+      </v-avatar>
+      <v-toolbar-title
+        style="font-size: 17px; margin-left: 10px; font-weight: bold"
+        >Web-Based Enrolment System of Don Eufemio F. Eriguel Memorial National
+        High School</v-toolbar-title
+      >
       <!-- End of Navbar left actions -->
       <v-spacer></v-spacer>
 
       <!-- Navbar right actions -->
-      <template v-if="loggedIn">
-        
-      </template>
+      <template v-if="loggedIn"> </template>
       <template v-else>
-        <v-btn depressed @click="$router.push({ name: 'enroll' })"> Enroll Now </v-btn>
+        <v-btn depressed @click="$router.push({ name: 'enroll' })">
+          Enroll Now
+        </v-btn>
         <!-- <v-btn
           depressed
           style="margin-left: 10px"

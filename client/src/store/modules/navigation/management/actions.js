@@ -11,7 +11,6 @@ export const fetchUsers = ({ commit }) => {
     });
 };
 
-
 export const updateUser = ({ commit }, payload) => {
   EventService.updateUserEvent(payload)
     .then((response) => {
@@ -21,5 +20,3 @@ export const updateUser = ({ commit }, payload) => {
       console.log(error);
     });
 };
-
-

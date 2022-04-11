@@ -6,7 +6,10 @@ export const fetchClearance = ({ commit }) => {
     .then((response) => {
       commit(types.SET_CLEARANCE_BADGE, response.data);
       commit(types.SET_ALL_CLEARANCE, response.data.allClearance.rows);
-      commit(types.SET_VERIFIED_CLEARANCE, response.data.verifiedClearance.rows);
+      commit(
+        types.SET_VERIFIED_CLEARANCE,
+        response.data.verifiedClearance.rows
+      );
     })
     .catch((error) => {
       console.log(error);
@@ -16,10 +19,9 @@ export const fetchClearance = ({ commit }) => {
 export const addClearance = (_, payload) => {
   EventService.addClearanceEvent(payload)
     .then((response) => {
-      console.log(response)
+      console.log(response);
     })
     .catch((error) => {
       console.log(error);
     });
 };
-

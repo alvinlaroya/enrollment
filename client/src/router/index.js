@@ -7,15 +7,11 @@ import Auth from "@/services/auth/Register.js";
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
 
-
 // Pages > Landing Pages
 import Home from "@/views/landing_page/Home.vue";
-
-// Pages > Navigation
-import Dashboard from "@/views/navigation/Dashboard.vue";
 import DashboardTemp from "@/views/navigation/DashboardTemp.vue";
-import CriminalCase from "@/views/navigation/CriminalCase.vue";
 import UserManagement from "@/views/navigation/UserManagement.vue";
+import Profile from "@/views/navigation/Profile.vue";
 
 // Forms
 import Enrollment from "@/views/enrollment_form/Form.vue";
@@ -69,41 +65,15 @@ const routes = [
     components: {
       default: DashboardTemp,
       navbar: Navbar,
-      /* sidebar: Sidebar, */
     },
     beforeEnter(to, from, next) {
       Auth.isAuthenticated()
         .then((response) => {
           if (response) {
-            next(); // If authenticated, proceed with the redirect
+            next(); //If authenticated, proceed with the redirect
           } else {
             next({ name: "auth.login" });
           }
-          /* console.log(response.data) */
-          next();
-        })
-        .catch(() => {
-          next({ name: "auth.login" });
-        });
-    },
-  },
-  {
-    path: "/case",
-    name: "navigation.case",
-    components: {
-      default: CriminalCase,
-      navbar: Navbar,
-      sidebar: Sidebar,
-    },
-    beforeEnter(to, from, next) {
-      Auth.isAuthenticated()
-        .then((response) => {
-          if (response) {
-            next(); // If authenticated, proceed with the redirect
-          } else {
-            next({ name: "auth.login" });
-          }
-          /* console.log(response.data) */
           next();
         })
         .catch(() => {
@@ -117,7 +87,29 @@ const routes = [
     components: {
       default: UserManagement,
       navbar: Navbar,
-      sidebar: Sidebar,
+    },
+    beforeEnter(to, from, next) {
+      Auth.isAuthenticated()
+        .then((response) => {
+          if (response) {
+            next(); // If authenticated, proceed with the redirect
+          } else {
+            next({ name: "auth.login" });
+          }
+          /* console.log(response.data) */
+          next();
+        })
+        .catch(() => {
+          next({ name: "auth.login" });
+        });
+    },
+  },
+  {
+    path: "/profile",
+    name: "navigation.user.profile",
+    components: {
+      default: Profile,
+      navbar: Navbar,
     },
     beforeEnter(to, from, next) {
       Auth.isAuthenticated()
