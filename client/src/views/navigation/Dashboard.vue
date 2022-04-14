@@ -156,51 +156,19 @@
                 <template v-slot:item.issuedOn="{ item }">
                   {{ dateTimeFormat(item.issuedOn) }}
                 </template>
-                <template v-slot:expanded-item="{ headers, item }">
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.idPicture)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      IdPicture.jpg
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.cedula)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      Cedula.jpg
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.ort)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      ORT.jpg
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.barangayClearance)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      BarangayClearance.jpg
-                    </v-chip>
-                  </td>
+                <template v-slot:[`item.f1`]="{ item }">
+                  <v-avatar>
+                    <img :src="`http://localhost:8000/${item}`" alt="John" />
+                  </v-avatar>
+                </template>
+                <template v-slot:item.f2="{ item }">
+                  {{ dateTimeFormat(item.issuedOn) }}
+                </template>
+                <template v-slot:item.f3="{ item }">
+                  {{ dateTimeFormat(item.issuedOn) }}
+                </template>
+                <template v-slot:item.f4="{ item }">
+                  {{ dateTimeFormat(item.issuedOn) }}
                 </template>
               </v-data-table>
             </v-tab-item>
@@ -210,7 +178,10 @@
       </v-col>
     </v-row>
     <v-dialog v-model="dialog" width="500">
-      <v-img :src="displayImage(dialogDisplayImage)" style="width: 100%;"></v-img>
+      <v-img
+        :src="displayImage(dialogDisplayImage)"
+        style="width: 100%"
+      ></v-img>
     </v-dialog>
   </v-container>
 </template>
@@ -241,12 +212,12 @@ export default {
         text: "First name",
         value: "fname",
       },
-      { text: "Middle name", value: "mname"},
+      { text: "Middle name", value: "mname" },
       { text: "Last name", value: "lname" },
       { text: "Address", value: "address" },
       { text: "Phone", value: "phone" },
       { text: "Age", value: "age" },
-      { text: "Date of Birth", value: "dateOfBirth", width: 154},
+      { text: "Date of Birth", value: "dateOfBirth", width: 154 },
       { text: "Citizenship", value: "citizenship" },
       { text: "Civil Status", value: "civilStatus" },
       { text: "OR#", value: "orNumber" },
@@ -254,6 +225,10 @@ export default {
       { text: "Issued At", value: "issuedAt", width: 150 },
       { text: "Issued On", value: "issuedOn", width: 150 },
       { text: "Purpose", value: "purpose" },
+      { text: "Purpose", value: "f1" },
+      { text: "Purpose", value: "f2" },
+      { text: "Purpose", value: "f3" },
+      { text: "Purpose", value: "f4" },
       { text: "", value: "data-table-expand", fixed: true },
     ],
   }),

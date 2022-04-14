@@ -145,6 +145,18 @@
             class="elevation-1"
             :search="search"
           >
+            <template v-slot:[`item.f1`]="{ item }">
+              <v-chip class="ma-2" @click="viewImage(item.f1)"> Image </v-chip>
+            </template>
+            <template v-slot:[`item.f2`]="{ item }">
+              <v-chip class="ma-2" @click="viewImage(item.f2)"> Image </v-chip>
+            </template>
+            <template v-slot:[`item.f3`]="{ item }">
+              <v-chip class="ma-2" @click="viewImage(item.f3)"> Image </v-chip>
+            </template>
+            <template v-slot:[`item.f4`]="{ item }">
+              <v-chip class="ma-2" @click="viewImage(item.f4)"> Image </v-chip>
+            </template>
             <template v-slot:item.status="{ item }">
               <v-chip :color="item.enrolled ? 'success' : 'warning'">{{
                 item.enrolled ? "Enrolled" : "Pending"
@@ -191,6 +203,12 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog v-model="dialog" width="500">
+      <v-img
+        :src="displayImage(dialogDisplayImage)"
+        style="width: 100%"
+      ></v-img>
+    </v-dialog>
   </div>
 </template>
 
@@ -252,8 +270,12 @@ export default {
       { text: "Province", value: "b23" },
       { text: "Track", value: "a15" },
       { text: "Strand", value: "a16" },
+      { text: "Card/SF9", value: "f1" },
+      { text: "Form 137", value: "f2" },
+      { text: "Birth Certificate", value: "f3" },
+      { text: "Good Moral", value: "f4" },
       { text: "Enroll Status", value: "status" },
-      { text: "Actions", value: "actions", sortable: false },
+      { text: "Actions", value: "actions", sortable: false, width: 120 },
     ],
     desserts: [],
     editedIndex: -1,
@@ -272,6 +294,8 @@ export default {
       protein: 0,
     },
     selectedBarangay: "",
+    dialog: false,
+    dialogDisplayImage: "",
   }),
   methods: {
     ...mapAuthActions(["logOutUser", "getAddresses"]),
@@ -281,6 +305,13 @@ export default {
       "exportToCsvEnrollByBarangay",
       "udpateEnrollStatus",
     ]),
+    displayImage(src) {
+      return `http://localhost:8000/${src}`;
+    },
+    viewImage(src) {
+      this.dialog = true;
+      this.dialogDisplayImage = src;
+    },
     navMenuMethods(method) {
       switch (method) {
         case "logout":
