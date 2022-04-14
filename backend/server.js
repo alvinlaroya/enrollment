@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
   res.json({ message: "hello from api" });
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 7000;
 
 // server
 

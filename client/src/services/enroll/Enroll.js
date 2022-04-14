@@ -1,7 +1,7 @@
 /* import apiClient from '../' */
 import axios from "axios";
 
-const apiUrl = "http://127.0.0.1:8000/api";
+const apiUrl = "http://127.0.0.1:7000/api";
 
 export default {
   /* async getClearanceEvent() {
