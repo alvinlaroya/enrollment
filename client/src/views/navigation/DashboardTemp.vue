@@ -306,7 +306,7 @@ export default {
       "udpateEnrollStatus",
     ]),
     displayImage(src) {
-      return `http://localhost:8000/${src}`;
+      return `http://localhost:7000/${src}`;
     },
     viewImage(src) {
       this.dialog = true;
