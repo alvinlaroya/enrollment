@@ -58,9 +58,9 @@
                           <v-row>
                             <v-col xs="12" sm="12" md="3">
                               <v-text-field
-                                v-model="name"
+                                v-model="user.a1"
                                 :rules="reguiredField"
-                                label="Year Start (Ex.: 2020-2021)"
+                                label="Year Start (Ex .: 2020-2021)"
                                 required
                               ></v-text-field>
                             </v-col>
@@ -138,6 +138,7 @@
                                 v-model="user.a6"
                                 :rules="reguiredField"
                                 label="Year"
+                                type="number"
                                 required
                               ></v-text-field>
                             </v-col>
@@ -602,6 +603,7 @@
                             :rules="reguiredField"
                             label="Numero ng Bahay at kalye"
                             required
+                            type="number"
                           ></v-text-field
                         ></v-col>
                         <v-col cols="4">
@@ -744,6 +746,7 @@
                                 :rules="reguiredField"
                                 label="Numero ng  Ama"
                                 required
+                                type="number"
                                 prefix="+639"
                               ></v-text-field>
                             </v-col>
@@ -782,6 +785,7 @@
                                 :rules="reguiredField"
                                 label="Numero ng Ina"
                                 required
+                                type="number"
                                 prefix="+639"
                               ></v-text-field>
                             </v-col> </v-row
@@ -820,6 +824,7 @@
                                 :rules="reguiredField"
                                 label="Numero Tagapag-alaga"
                                 required
+                                type="number"
                                 prefix="+639"
                               ></v-text-field>
                             </v-col> </v-row
@@ -1156,6 +1161,15 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="snackbar" color="error">
+      {{ snackbartext }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 <script>
@@ -1330,21 +1344,33 @@ export default {
       "Delikado dahil sa armadong tungalian o posibleng engkwentro sa pagitan ng militar at nasa kabilang panig ng gobyerno",
       "Iba pang kadahilanan",
     ],
+    snackbar: false,
+    snackbartext: "",
   }),
   methods: {
     ...mapActions(["addEnroll"]),
     validate() {
       /* this.$refs.form.validate(); */
-      const self = this;
-      var formData = this.toFormData(this.user);
-      this.addEnroll(formData).then(() => {
-        self.dialog = false;
-        this.$swal.fire(
-          "Enrolled!",
-          "Your application submitted succesfully!",
-          "success"
-        );
-      });
+      if (
+        this.user.f1 != null &&
+        this.user.f2 != null &&
+        this.user.f3 != null &&
+        this.user.f4 != null
+      ) {
+        const self = this;
+        var formData = this.toFormData(this.user);
+        this.addEnroll(formData).then(() => {
+          self.dialog = false;
+          this.$swal.fire(
+            "Enrolled!",
+            "Your application submitted succesfully!",
+            "success"
+          );
+        });
+      } else {
+        this.snackbar = true;
+        this.snackbartext = "Please upload all the attachment requirements";
+      }
     },
     toFormData(obj) {
       var fd = new FormData();

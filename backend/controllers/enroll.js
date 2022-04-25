@@ -190,8 +190,21 @@ const addEnroll = async (req, res) => {
     }
   });
 
-  const enroll = await Enroll.create(param);
-  res.status(200).send(enroll);
+  let hasLRN = await Enroll.find({
+    where: {
+      b2: b2,
+    },
+  });
+
+  if (hasLRN) {
+    res.status(200).json({
+      status: "error",
+      message: "LRN is already taken",
+    });
+  } else {
+    const enroll = await Enroll.create(param);
+    res.status(200).send(enroll);
+  }
 };
 
 const exportToCsvByBarangay = async (req, res) => {
@@ -223,10 +236,65 @@ const getAllEnrolls = async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
+  let enrolled = await Enroll.findAndCountAll({
+    where: {
+      enrolled: true,
+    },
+  });
+
+  let enrolledGrade7 = await Enroll.findAndCountAll({
+    where: {
+      enrolled: true,
+      a4: 7,
+    },
+  });
+
+  let enrolledGrade8 = await Enroll.findAndCountAll({
+    where: {
+      enrolled: true,
+      a4: 8,
+    },
+  });
+
+  let enrolledGrade9 = await Enroll.findAndCountAll({
+    where: {
+      enrolled: true,
+      a4: 9,
+    },
+  });
+
+  let enrolledGrade10 = await Enroll.findAndCountAll({
+    where: {
+      enrolled: true,
+      a4: 10,
+    },
+  });
+
+  let enrolledGrade11 = await Enroll.findAndCountAll({
+    where: {
+      enrolled: true,
+      a4: 11,
+    },
+  });
+
+  let enrolledGrade12 = await Enroll.findAndCountAll({
+    where: {
+      enrolled: true,
+      a4: 8,
+    },
+  });
+
   res.header("Access-Control-Allow-Origin", "*");
   res.json({
     message: "success",
     allEnroll: enrolls,
+    enrolled: enrolled,
+    enrolledGrade7: enrolledGrade7,
+    enrolledGrade8: enrolledGrade8,
+    enrolledGrade9: enrolledGrade9,
+    enrolledGrade10: enrolledGrade10,
+    enrolledGrade11: enrolledGrade11,
+    enrolledGrade12: enrolledGrade12,
   });
 };
 

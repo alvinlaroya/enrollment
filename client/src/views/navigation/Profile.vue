@@ -288,6 +288,11 @@ export default {
             path: "/dashboard",
           },
           {
+            text: "Enrolled Students",
+            icon: "mdi-account-group-outline",
+            path: "/enrolled",
+          },
+          {
             text: "User Management",
             icon: "mdi-account-cog-outline",
             path: "/management",

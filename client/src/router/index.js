@@ -10,6 +10,7 @@ import Register from "@/views/auth/Register.vue";
 // Pages > Landing Pages
 import Home from "@/views/landing_page/Home.vue";
 import DashboardTemp from "@/views/navigation/DashboardTemp.vue";
+import EnrolledStudent from "@/views/navigation/EnrolledStudent.vue";
 import UserManagement from "@/views/navigation/UserManagement.vue";
 import Profile from "@/views/navigation/Profile.vue";
 
@@ -64,6 +65,28 @@ const routes = [
     name: "navigation.dashboard",
     components: {
       default: DashboardTemp,
+      navbar: Navbar,
+    },
+    beforeEnter(to, from, next) {
+      Auth.isAuthenticated()
+        .then((response) => {
+          if (response) {
+            next(); //If authenticated, proceed with the redirect
+          } else {
+            next({ name: "auth.login" });
+          }
+          next();
+        })
+        .catch(() => {
+          next({ name: "auth.login" });
+        });
+    },
+  },
+  {
+    path: "/enrolled",
+    name: "navigation.enrolled",
+    components: {
+      default: EnrolledStudent,
       navbar: Navbar,
     },
     beforeEnter(to, from, next) {

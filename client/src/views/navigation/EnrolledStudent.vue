@@ -93,108 +93,10 @@
     </v-navigation-drawer>
     <v-container fluid>
       <v-row>
-        <v-col cols="2">
-          <v-card>
-            <v-card-title>Enrolled Grade 7</v-card-title>
-            <v-card-text>
-              <span style="font-size: 18px">{{
-                enrolled.grade7
-                  ? `${enrolled.grade7} students`
-                  : `No enrolled student(s)`
-              }}</span>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="2">
-          <v-card>
-            <v-card-title>Enrolled Grade 8</v-card-title>
-            <v-card-text>
-              <span style="font-size: 18px">{{
-                enrolled.grade8
-                  ? `${enrolled.grade8} student(s)`
-                  : `No enrolled student(s)`
-              }}</span>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="2">
-          <v-card>
-            <v-card-title>Enrolled Grade 9</v-card-title>
-            <v-card-text>
-              <span style="font-size: 18px">{{
-                enrolled.grade9
-                  ? `${enrolled.grade9} student(s)`
-                  : `No enrolled student(s)`
-              }}</span>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="2">
-          <v-card>
-            <v-card-title>Enrolled Grade 10</v-card-title>
-            <v-card-text>
-              <span style="font-size: 18px">{{
-                enrolled.grade10
-                  ? `${enrolled.grade10} student(s)`
-                  : `No enrolled student(s)`
-              }}</span>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="2">
-          <v-card>
-            <v-card-title>Enrolled Grade 11</v-card-title>
-            <v-card-text>
-              <span style="font-size: 18px">{{
-                enrolled.grade11
-                  ? `${enrolled.grade11} student(s)`
-                  : `No enrolled student(s)`
-              }}</span>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="2">
-          <v-card>
-            <v-card-title>Enrolled Grade 12</v-card-title>
-            <v-card-text>
-              <span style="font-size: 18px">{{
-                enrolled.grade12
-                  ? `${enrolled.grade12} student(s)`
-                  : `No enrolled student(s)`
-              }}</span>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="6">
-          <v-card>
-            <v-card-title> Pending Applications </v-card-title>
-            <v-card-text style="font-size: 22px">
-              {{
-                count
-                  ? `${count - enrolled.all} Applications`
-                  : `No Application`
-              }}
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="6">
-          <v-card>
-            <v-card-title> Approved Applications </v-card-title>
-            <v-card-text style="font-size: 22px">
-              {{
-                enrolled.all ? `${enrolled.all} Applications` : `No Application`
-              }}
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row>
         <v-col cols="12">
           <v-toolbar dense class="elevation-1">
             <v-toolbar-title
-              >{{ count }} Enrollment Applications</v-toolbar-title
+              >{{ enrolled.all }} Enrolled Students</v-toolbar-title
             >
 
             <v-spacer></v-spacer>
@@ -238,7 +140,7 @@
           </v-toolbar>
           <v-data-table
             :headers="headers"
-            :items="allEnrolls"
+            :items="enrolledStudents"
             sort-by="calories"
             class="elevation-1"
             :search="search"
@@ -769,7 +671,7 @@ export default {
   },
   computed: {
     ...mapAuthGetters(["currentUser", "addresses"]),
-    ...mapNavigationGetters(["allEnrolls", "count", "enrolled"]),
+    ...mapNavigationGetters(["enrolledStudents", "count", "enrolled"]),
   },
   created() {
     EventBus.$on("switch-mini", () => {

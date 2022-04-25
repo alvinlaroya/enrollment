@@ -28,6 +28,7 @@ export const fetchEnrolls = ({ commit }) => {
     .then((response) => {
       commit("SET_ALL_ENROLL", response.data.allEnroll.rows);
       commit("SET_ALL_ENROLL_COUNT", response.data.allEnroll.count);
+      commit("SET_ENROLLED", response.data);
     })
     .catch((error) => {
       console.log(error);

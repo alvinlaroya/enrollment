@@ -153,7 +153,7 @@
                     </v-col>
                   </v-row>
                   <v-row class="mt-0">
-                     <v-col cols="3">
+                    <v-col cols="3">
                       <v-text-field
                         v-model="clearance.phone"
                         :rules="requiredRules"
@@ -334,7 +334,12 @@
                       :label="clearance.verified ? 'Verified' : 'Not Verified'"
                       required
                     ></v-checkbox>
-                    <v-btn color="success" class="mr-4 ml-10" x-large @click="validate">
+                    <v-btn
+                      color="success"
+                      class="mr-4 ml-10"
+                      x-large
+                      @click="validate"
+                    >
                       Save Application
                     </v-btn>
                   </v-row>
@@ -355,12 +360,7 @@
       {{ snackbarText }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="black"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="black" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -373,7 +373,7 @@ import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("navigation");
 
 export default {
-  data: () => ({ 
+  data: () => ({
     snackbar: false,
     snackbarText: "",
     birthDateMenu: null,
@@ -459,8 +459,8 @@ export default {
         var formData = this.toFormData(this.clearance);
         this.addClearance(formData);
         this.$refs.form.reset();
-        this.snackbar = true
-        this.snackbarText = "Police Clearance Application Created!"
+        this.snackbar = true;
+        this.snackbarText = "Police Clearance Application Created!";
       }
     },
     reset() {
@@ -489,7 +489,7 @@ export default {
       return fd;
     },
     searchCrimeCase() {
-      this.searchCase(this.search)
+      this.searchCase(this.search);
     },
     dateTimeFormat(date) {
       return new Date(date).toLocaleString("default", {

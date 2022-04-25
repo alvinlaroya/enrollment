@@ -9,6 +9,16 @@ export default {
     state.allEnrolls = [];
     state.allEnrolls = data;
   },
+  SET_ENROLLED(state, data) {
+    state.enrolled = data.enrolled.count;
+    state.enrolledG7 = data.enrolledGrade7.count;
+    state.enrolledG8 = data.enrolledGrade8.count;
+    state.enrolledG9 = data.enrolledGrade9.count;
+    state.enrolledG10 = data.enrolledGrade10.count;
+    state.enrolledG11 = data.enrolledGrade11.count;
+    state.enrolledG12 = data.enrolledGrade12.count;
+    state.enrolledStudents = data.enrolled.rows;
+  },
   SET_ALL_ENROLL_COUNT(state, data) {
     state.count = data;
   },

@@ -7,3 +7,13 @@ export const badges = state => ({
 
 export const allEnrolls = (state) => state.allEnrolls;
 export const count = (state) => state.count;
+export const enrolledStudents = (state) => state.enrolledStudents;
+export const enrolled = (state) => ({
+  all: state.enrolled,
+  grade7: state.enrolledG7,
+  grade8: state.enrolledG8,
+  grade9: state.enrolledG9,
+  grade10: state.enrolledG10,
+  grade11: state.enrolledG11,
+  grade12: state.enrolledG12,
+});
