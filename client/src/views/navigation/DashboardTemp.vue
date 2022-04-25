@@ -280,6 +280,21 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
                     medium
+                    @click="printPreview(item)"
+                    color="success"
+                    class="ml-6"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    >mdi-printer-outline</v-icon
+                  >
+                </template>
+                <span>Print Preview </span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    medium
                     @click="setEnrollStatus(item)"
                     color="success"
                     class="ml-6"
@@ -307,6 +322,135 @@
         style="width: 100%"
       ></v-img>
     </v-dialog>
+    <v-dialog v-model="printDialog" width="816">
+      <v-card class="rounded-0 elevation-0">
+        <v-card-text id="printMe">
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-avatar :size="40">
+                  <img src="@/images/defemnhslogo.jpeg" alt="John" />
+                </v-avatar>
+                <span style="font-weight: bold; margin-left: 20px"
+                  >Don Eufemio F. Eriguel Memorial National High School</span
+                >
+              </v-col>
+            </v-row>
+            <v-row style="margin-top: 40px">
+              <v-col cols="12" style="height: 45px; background-color: gray">
+                <h3>Student Information</h3>
+              </v-col>
+              <v-col cols="12">
+                <span
+                  ><span style="font-weight: bold">LRN:</span>
+                  {{ print.b2 }}</span
+                >
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="6">
+                <span style="font-weight: bold">Name:</span>
+                {{ `${print.b3}, ${print.b4} ${print.b5}` }}
+              </v-col>
+              <v-col cols="6">
+                <span style="font-weight: bold">Age:</span>
+                {{ print.b8 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <span style="font-weight: bold">Birth Date:</span>
+                {{ print.b7 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <span style="font-weight: bold">Religion:</span>
+                {{ print.b13 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" style="height: 45px; background-color: gray">
+                <h3>Address</h3>
+              </v-col>
+              <v-col cols="12">
+                <span style="font-weight: bold">Street:</span> {{ print.b20 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <span style="font-weight: bold">Barangay:</span> {{ print.b21 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <span style="font-weight: bold">Municipal:</span>
+                {{ print.b22 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <span style="font-weight: bold">Province:</span> {{ print.b23 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" style="height: 45px; background-color: gray">
+                <h3>Track & Strand</h3>
+              </v-col>
+              <v-col cols="6">
+                <span style="font-weight: bold">Track:</span> {{ print.a15 }}
+              </v-col>
+              <v-col cols="6">
+                <span style="font-weight: bold">Strand:</span> {{ print.a16 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" style="height: 45px; background-color: gray">
+                <h3>Parent Information</h3>
+              </v-col>
+              <v-col cols="6">
+                <span style="font-weight: bold">Name of Father:</span>
+                {{ print.c1 }}
+              </v-col>
+              <v-col cols="6">
+                <span style="font-weight: bold">Contact:</span> {{ print.c3 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="6">
+                <span style="font-weight: bold">Name of Mother:</span>
+                {{ print.c4 }}
+              </v-col>
+              <v-col cols="6">
+                <span style="font-weight: bold">Contact:</span> {{ print.c6 }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" style="height: 45px; background-color: gray">
+                <h3>Submitted Requirements</h3>
+              </v-col>
+              <v-col cols="12" style="margin-left: 10px">
+                <ul>
+                  <li v-if="print.f1 != ''">Card/SF9</li>
+                  <li v-if="print.f2 != ''">Form 137/SF10</li>
+                  <li v-if="print.f3 != ''">Birth Certificate</li>
+                  <li v-if="print.f4 != ''">Good Moral</li>
+                </ul>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="default" text @click="printDialog = false">
+            Close</v-btn
+          >
+          <v-btn color="primary" text v-print="printObj">
+            <v-icon>mdi-printer</v-icon> Print
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -323,6 +467,23 @@ export default {
     drawer: !null,
     mini: false,
     search: "",
+    printObj: {
+      id: "printMe",
+      popTitle: "Enrollment Application",
+      extraCss: "../../assets/css/print.css",
+      extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
+      beforeOpenCallback(vue) {
+        vue.printLoading = true;
+        console.log("打开之前");
+      },
+      openCallback(vue) {
+        vue.printLoading = false;
+        console.log("执行了打印");
+      },
+      closeCallback(vue) {
+        console.log("关闭了打印工具");
+      },
+    },
     navigationList: [
       {
         subheader: "Navigation",
@@ -378,7 +539,7 @@ export default {
       { text: "Birth Certificate", value: "f3" },
       { text: "Good Moral", value: "f4" },
       { text: "Enroll Status", value: "status" },
-      { text: "Actions", value: "actions", sortable: false, width: 120 },
+      { text: "Actions", value: "actions", sortable: false, width: 160 },
     ],
     desserts: [],
     editedIndex: -1,
@@ -399,6 +560,8 @@ export default {
     selectedBarangay: "",
     dialog: false,
     dialogDisplayImage: "",
+    print: {},
+    printDialog: false,
   }),
   methods: {
     ...mapAuthActions(["logOutUser", "getAddresses"]),
@@ -441,6 +604,10 @@ export default {
         }`,
         "success"
       );
+    },
+    printPreview(item) {
+      this.printDialog = true;
+      this.print = item;
     },
     convertRowToCsv(row) {
       var headers = {
