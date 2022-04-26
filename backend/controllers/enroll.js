@@ -190,7 +190,7 @@ const addEnroll = async (req, res) => {
     }
   });
 
-  let hasLRN = await Enroll.find({
+  let hasLRN = await Enroll.findOne({
     where: {
       b2: b2,
     },
