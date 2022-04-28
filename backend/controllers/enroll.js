@@ -167,22 +167,21 @@ const addEnroll = async (req, res) => {
     e1,
     e2,
     f1: req.files["f1"][0].path,
-    f2: req.files["f2"][0].path,
     f3: req.files["f3"][0].path,
-    f4: req.files["f4"][0].path,
   };
 
   const from = "Vonage APIs";
   const to = `639${c6}`;
-  const text = `Good Day Mr./Mrs. ${c4} your son/daughter ${b4} ${b5} ${b3} has submitted his/her enrollment application in DEFEMNHS on ${new Date(
-    date
-  ).toLocaleString("default", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  })}`;
+  const text = `Good Day Mr./Mrs. ${c4} your son/daughter ${b4} ${b5} ${b3} has submitted his/her enrollment application in DEFEMNHS on ${new Date().toLocaleString(
+    "default",
+    {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }
+  )}`;
 
   vonage.message.sendSms(from, to, text, (err, responseData) => {
     if (err) {

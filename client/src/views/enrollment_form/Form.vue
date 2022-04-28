@@ -1323,7 +1323,7 @@ export default {
     ...mapActions(["addEnroll"]),
     validate() {
       /* this.$refs.form.validate(); */
-      if (this.user.f1 != null && this.user.f3 != nul) {
+      if (this.user.f1 != null && this.user.f3 != null) {
         const self = this;
         var formData = this.toFormData(this.user);
         this.addEnroll(formData).then(() => {
