@@ -19,6 +19,9 @@ export default {
     state.enrolledG12 = data.enrolledGrade12.count;
     state.enrolledStudents = data.enrolled.rows;
   },
+  SET_ALL_GRADE_ENROLL(state, data) {
+    state.selectedGradeEnrolled = data;
+  },
   SET_ALL_ENROLL_COUNT(state, data) {
     state.count = data;
   },

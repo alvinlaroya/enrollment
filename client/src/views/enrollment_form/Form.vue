@@ -318,7 +318,7 @@
                   <v-form ref="form2">
                     <v-container fluid>
                       <v-row>
-                        <v-col cols="6">
+                        <v-col :cols="user.a2 ? 6 : 12">
                           <span class="font-weight-bold"
                             >B1: Numero na nakalagay sa Sertipiko ng
                             Kapanganakan (Birth Certificate) mula sa PSA (kung
@@ -335,7 +335,7 @@
                             </v-col>
                           </v-row>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col v-if="user.a2" cols="6">
                           <span class="font-weight-bold"
                             >Learner Reference Number</span
                           >
@@ -1107,21 +1107,6 @@
               </v-col>
               <v-col cols="12" style="margin-top: -25px">
                 <span class="font-weight-bold"
-                  >Mag upload ng Form 137 o SF10.</span
-                >
-                <v-row class="mt-0">
-                  <v-col xs="12" sm="12" md="12">
-                    <v-file-input
-                      accept="image/*"
-                      label="Form 137/SF10"
-                      v-model="user.f2"
-                      outlined
-                    ></v-file-input>
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" style="margin-top: -25px">
-                <span class="font-weight-bold"
                   >Mag upload ng Birth Certificate.</span
                 >
                 <v-row class="mt-0">
@@ -1130,19 +1115,6 @@
                       accept="image/*"
                       label="Birth Certificate"
                       v-model="user.f3"
-                      outlined
-                    ></v-file-input>
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" style="margin-top: -25px">
-                <span class="font-weight-bold">Mag upload ng Good Moral.</span>
-                <v-row class="mt-0">
-                  <v-col xs="12" sm="12" md="12">
-                    <v-file-input
-                      accept="image/*"
-                      label="Good Moral"
-                      v-model="user.f4"
                       outlined
                     ></v-file-input>
                   </v-col>
@@ -1274,18 +1246,18 @@ export default {
     ],
     d1Select: [
       "Kinder",
-      "Baitang 1",
-      "Baitang 2",
-      "Baitang 3",
-      "Baitang 4",
-      "Baitang 5",
-      "Baitang 6",
-      "Baitang 7",
-      "Baitang 8",
-      "Baitang 9",
-      "Baitang 10",
-      "Baitang 11",
-      "Baitang 12",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
       "Iba pa (Hal: Kolehiyo, bokasyonal at iba pa)",
     ],
     d2Select: [
@@ -1351,18 +1323,13 @@ export default {
     ...mapActions(["addEnroll"]),
     validate() {
       /* this.$refs.form.validate(); */
-      if (
-        this.user.f1 != null &&
-        this.user.f2 != null &&
-        this.user.f3 != null &&
-        this.user.f4 != null
-      ) {
+      if (this.user.f1 != null && this.user.f3 != nul) {
         const self = this;
         var formData = this.toFormData(this.user);
         this.addEnroll(formData).then(() => {
           self.dialog = false;
           this.$swal.fire(
-            "Enrolled!",
+            "Successfully Submitted!",
             "Your application submitted succesfully!",
             "success"
           );

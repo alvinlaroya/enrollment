@@ -10,6 +10,7 @@ router.get("/getEnrolls", enroll.getAllEnrolls);
 router.post("/getEnrollsByBarangay", enroll.getAllEnrollsByBarangay);
 router.post("/exportToCsvByBarangay", enroll.exportToCsvByBarangay);
 router.patch("/updateEnrollStatus/:id", enroll.updateEnrollStatus);
+router.get("/getEnrollsPerLevel/:level", enroll.getAllEnrollsPerLevel);
 /* router.get("/getClearances", middleware, clearance.getAllClearances);
 router.put("/updateClearance/:id", clearance.updateClearance);
 router.delete("/deleteClearance", clearance.deleteClearance); */

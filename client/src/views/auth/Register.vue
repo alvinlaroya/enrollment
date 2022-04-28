@@ -46,7 +46,7 @@
                     <v-text-field
                       v-model="user.email"
                       :rules="emailRules"
-                      label="Email"
+                      label="Username"
                       required
                     ></v-text-field>
                   </v-col>
@@ -161,11 +161,7 @@ export default {
     mnameRules: [(v) => !!v || "Middle name is required"],
     lnameRules: [(v) => !!v || "Last name is required"],
     email: "",
-    emailRules: [
-      (v) => !!v || "E-mail is required",
-      (v) => (v && v.length <= 40) || "Name must be less than 40 characters",
-      (v) => /.+@.+\..+/.test(v) || "Email must be valid",
-    ],
+    emailRules: [(v) => !!v || "Username is required"],
     password: "",
     passwordRules: [(v) => !!v || "Password is required"],
     snackbar: false,

@@ -35,6 +35,16 @@ export const fetchEnrolls = ({ commit }) => {
     });
 };
 
+export const getSelectedGradeEnrolled = ({ commit }, payload) => {
+  EventService.getSelectedGradeEnrolledEvent(payload)
+    .then((response) => {
+      commit("SET_ALL_GRADE_ENROLL", response.data.allEnroll.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const fetchEnrollsByBarangay = ({ commit }, payload) => {
   EventService.getEnrollByBarangayEvent(payload)
     .then((response) => {

@@ -94,7 +94,7 @@
     <v-container fluid>
       <v-row>
         <v-col cols="2">
-          <v-card>
+          <v-card @click="showEnrolled(7)">
             <v-card-title>Enrolled Grade 7</v-card-title>
             <v-card-text>
               <span style="font-size: 18px">{{
@@ -106,7 +106,7 @@
           </v-card>
         </v-col>
         <v-col cols="2">
-          <v-card>
+          <v-card @click="showEnrolled(8)">
             <v-card-title>Enrolled Grade 8</v-card-title>
             <v-card-text>
               <span style="font-size: 18px">{{
@@ -118,7 +118,7 @@
           </v-card>
         </v-col>
         <v-col cols="2">
-          <v-card>
+          <v-card @click="showEnrolled(9)">
             <v-card-title>Enrolled Grade 9</v-card-title>
             <v-card-text>
               <span style="font-size: 18px">{{
@@ -130,7 +130,7 @@
           </v-card>
         </v-col>
         <v-col cols="2">
-          <v-card>
+          <v-card @click="showEnrolled(10)">
             <v-card-title>Enrolled Grade 10</v-card-title>
             <v-card-text>
               <span style="font-size: 18px">{{
@@ -142,7 +142,7 @@
           </v-card>
         </v-col>
         <v-col cols="2">
-          <v-card>
+          <v-card @click="showEnrolled(11)">
             <v-card-title>Enrolled Grade 11</v-card-title>
             <v-card-text>
               <span style="font-size: 18px">{{
@@ -154,7 +154,7 @@
           </v-card>
         </v-col>
         <v-col cols="2">
-          <v-card>
+          <v-card @click="showEnrolled(12)">
             <v-card-title>Enrolled Grade 12</v-card-title>
             <v-card-text>
               <span style="font-size: 18px">{{
@@ -246,14 +246,8 @@
             <template v-slot:[`item.f1`]="{ item }">
               <v-chip class="ma-2" @click="viewImage(item.f1)"> Image </v-chip>
             </template>
-            <template v-slot:[`item.f2`]="{ item }">
-              <v-chip class="ma-2" @click="viewImage(item.f2)"> Image </v-chip>
-            </template>
             <template v-slot:[`item.f3`]="{ item }">
               <v-chip class="ma-2" @click="viewImage(item.f3)"> Image </v-chip>
-            </template>
-            <template v-slot:[`item.f4`]="{ item }">
-              <v-chip class="ma-2" @click="viewImage(item.f4)"> Image </v-chip>
             </template>
             <template v-slot:item.status="{ item }">
               <v-chip :color="item.enrolled ? 'success' : 'warning'">{{
@@ -535,9 +529,7 @@ export default {
       { text: "Track", value: "a15" },
       { text: "Strand", value: "a16" },
       { text: "Card/SF9", value: "f1" },
-      { text: "Form 137", value: "f2" },
       { text: "Birth Certificate", value: "f3" },
-      { text: "Good Moral", value: "f4" },
       { text: "Enroll Status", value: "status" },
       { text: "Actions", value: "actions", sortable: false, width: 160 },
     ],
@@ -608,6 +600,12 @@ export default {
     printPreview(item) {
       this.printDialog = true;
       this.print = item;
+    },
+    showEnrolled(level) {
+      this.$router.push({
+        name: "grade.level",
+        params: { level: level },
+      });
     },
     convertRowToCsv(row) {
       var headers = {

@@ -11,6 +11,7 @@ import Register from "@/views/auth/Register.vue";
 import Home from "@/views/landing_page/Home.vue";
 import DashboardTemp from "@/views/navigation/DashboardTemp.vue";
 import EnrolledStudent from "@/views/navigation/EnrolledStudent.vue";
+import SelectedGradeLevel from "@/views/SelectedGradeLevel.vue";
 import UserManagement from "@/views/navigation/UserManagement.vue";
 import Profile from "@/views/navigation/Profile.vue";
 
@@ -58,6 +59,14 @@ const routes = [
     components: {
       default: Register,
       navbar: AdminNavbar,
+    },
+  },
+  {
+    path: "/grade/:level",
+    name: "grade.level",
+    components: {
+      default: SelectedGradeLevel,
+      navbar: Navbar,
     },
   },
   {

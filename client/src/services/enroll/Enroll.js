@@ -37,6 +37,17 @@ export default {
     });
   },
 
+  async getSelectedGradeEnrolledEvent(level) {
+    return await axios.get(`${apiUrl}/enroll/getEnrollsPerLevel/${level}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    });
+  },
+
   async getEnrollByBarangayEvent(payload) {
     return await axios.post(`${apiUrl}/enroll/getEnrollsByBarangay`, payload, {
       headers: {

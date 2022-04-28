@@ -1,10 +1,6 @@
 <template>
   <div>
-    <v-parallax
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Heiwa_elementary_school_18.jpg/1280px-Heiwa_elementary_school_18.jpg"
-      height="350"
-      centered
-    ></v-parallax>
+    <v-parallax :src="image" height="500" centered></v-parallax>
     <v-container>
       <v-row class="mt-10">
         <v-col cols="12" class="text-center">
@@ -72,7 +68,12 @@
 </template>
 
 <script>
-export default {};
+const background = require("../../images/background.jpg");
+export default {
+  data: () => ({
+    image: background,
+  }),
+};
 </script>
 
 <style></style>

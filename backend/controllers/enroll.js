@@ -174,7 +174,15 @@ const addEnroll = async (req, res) => {
 
   const from = "Vonage APIs";
   const to = `639${c6}`;
-  const text = `Good day Mr/Mrs. ${c4}, ${b3},${b4} ${b5} is submitted his/her enrollment application today. Thank You!`;
+  const text = `Good Day Mr./Mrs. ${c4} your son/daughter ${b4} ${b5} ${b3} has submitted his/her enrollment application in DEFEMNHS on ${new Date(
+    date
+  ).toLocaleString("default", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  })}`;
 
   vonage.message.sendSms(from, to, text, (err, responseData) => {
     if (err) {
@@ -280,7 +288,7 @@ const getAllEnrolls = async (req, res) => {
   let enrolledGrade12 = await Enroll.findAndCountAll({
     where: {
       enrolled: true,
-      a4: 8,
+      a4: 12,
     },
   });
 
@@ -316,6 +324,23 @@ const getAllEnrollsByBarangay = async (req, res) => {
   });
 };
 
+const getAllEnrollsPerLevel = async (req, res) => {
+  const level = req.params.level;
+
+  let enrolls = await Enroll.findAndCountAll({
+    where: {
+      a4: level,
+    },
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.header("Access-Control-Allow-Origin", "*");
+  res.json({
+    message: "success",
+    allEnroll: enrolls,
+  });
+};
+
 const updateEnrollStatus = async (req, res) => {
   const data = req.body;
 
@@ -333,7 +358,7 @@ const updateEnrollStatus = async (req, res) => {
   if (!data.enrolled) {
     const from = "Vonage APIs";
     const to = `639${data.c6}`;
-    const text = `Good day Mr/Mrs ${data.c4}. The enrollment application of ${data.b3},${data.b4} ${data.b5} is now enrolled. Thank You!`;
+    const text = `Good Day Mr./Mrs. ${c4}, the enrollment status of your son of daugther ${b4} ${b5} ${b3}in DEFEMNHS is now confirmed.`;
 
     vonage.message.sendSms(from, to, text, (err, responseData) => {
       if (err) {
@@ -357,6 +382,7 @@ module.exports = {
   addEnroll,
   getAllEnrolls,
   getAllEnrollsByBarangay,
+  getAllEnrollsPerLevel,
   exportToCsvByBarangay,
   updateEnrollStatus,
   upload,

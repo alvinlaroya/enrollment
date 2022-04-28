@@ -31,7 +31,7 @@
                   v-model="email"
                   :counter="40"
                   :rules="emailRules"
-                  label="Email"
+                  label="Username"
                   required
                   outlined
                   prepend-inner-icon="mdi-account"
@@ -70,11 +70,7 @@ export default {
     valid: true,
     show: false,
     email: "",
-    emailRules: [
-      (v) => !!v || "E-mail is required",
-      (v) => (v && v.length <= 40) || "Name must be less than 40 characters",
-      (v) => /.+@.+\..+/.test(v) || "Email must be valid",
-    ],
+    emailRules: [(v) => !!v || "Username is required"],
     password: "",
     passwordRules: [(v) => !!v || "Password is required"],
   }),
