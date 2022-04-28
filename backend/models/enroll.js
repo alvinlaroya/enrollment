@@ -216,13 +216,7 @@ module.exports = (sequelize, DataTypes) => {
     f1: {
       type: DataTypes.STRING,
     },
-    f2: {
-      type: DataTypes.STRING,
-    },
     f3: {
-      type: DataTypes.STRING,
-    },
-    f4: {
       type: DataTypes.STRING,
     },
     enrolled: {
