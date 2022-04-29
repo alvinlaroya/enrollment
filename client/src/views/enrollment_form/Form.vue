@@ -382,9 +382,7 @@
                         <v-col cols="3">
                           <v-text-field
                             v-model="user.b6"
-                            :rules="reguiredField"
                             label="Extension Name (Ex: Jr)"
-                            required
                           ></v-text-field
                         ></v-col>
                       </v-row>
