@@ -62,10 +62,8 @@
                   <th style="text-align: left">LRN</th>
                   <th style="text-align: left">Name</th>
                   <th style="text-align: left">Address</th>
-                  <th style="text-align: left">Track</th>
                   <th style="text-align: left">Strand</th>
                   <th style="text-align: left">Email</th>
-                  <th style="text-align: left">Grade Level</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,16 +78,10 @@
                     {{ `${item.b21} ${item.b22} ${item.b23}` }}
                   </th>
                   <th style="text-align: left; font-weight: 400">
-                    {{ item.a15 }}
-                  </th>
-                  <th style="text-align: left; font-weight: 400">
                     {{ item.a16 }}
                   </th>
                   <th style="text-align: left; font-weight: 400">
                     {{ item.b18 }}
-                  </th>
-                  <th style="text-align: left; font-weight: 400">
-                    Grade {{ $route.params.level }}
                   </th>
                 </tr>
               </tbody>
@@ -129,7 +121,6 @@ export default {
       { text: "Barangay", value: "b21" },
       { text: "Municipal", value: "b22" },
       { text: "Province", value: "b23" },
-      { text: "Track", value: "a15" },
       { text: "Strand", value: "a16" },
       { text: "Card/SF9", value: "f1" },
       { text: "Birth Certificate", value: "f3" },

@@ -357,7 +357,7 @@ const updateEnrollStatus = async (req, res) => {
   if (!data.enrolled) {
     const from = "Vonage APIs";
     const to = `639${data.c6}`;
-    const text = `Good Day Mr./Mrs. ${data.c4}, the enrollment status of your son of daugther ${data.b4} ${data.b5} ${data.b3}in DEFEMNHS is now confirmed.`;
+    const text = `Good Day Mr./Mrs. ${data.c4}, the enrollment status of your son/daugther ${data.b4} ${data.b5} ${data.b3}in DEFEMNHS is now confirmed.`;
 
     vonage.message.sendSms(from, to, text, (err, responseData) => {
       if (err) {
