@@ -31,6 +31,7 @@ db.sequelize = sequelize;
 
 db.users = require("./user")(sequelize, DataTypes);
 db.enrolls = require("./enroll")(sequelize, DataTypes);
+db.students = require("./student")(sequelize, DataTypes);
 /* db.clearances = require('./clearance')(sequelize, DataTypes)
 db.cases = require('./case')(sequelize, DataTypes) */
 

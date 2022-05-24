@@ -13,6 +13,16 @@ import * as types from "@/store/mutation-types";
     });
 }; */
 
+export const exportEnroll = (_, payload) => {
+  EventService.exportEnrollEvent(payload)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const addEnroll = (_, payload) => {
   EventService.addEnrollEvent(payload)
     .then((response) => {
@@ -60,6 +70,16 @@ export const fetchEnrollsByBarangay = ({ commit }, payload) => {
 
 export const exportToCsvEnrollByBarangay = (_, payload) => {
   EventService.exportToCsvByBarangayEvent(payload)
+    .then((response) => {
+      //
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const exportToCsvEnrollByGradeLevel = (_, payload) => {
+  EventService.exportToCsvByGradeLevelEvent(payload)
     .then((response) => {
       //
     })

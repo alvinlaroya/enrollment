@@ -289,6 +289,21 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
                     medium
+                    @click="exportHandler(item)"
+                    color="success"
+                    class="ml-6"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    >mdi-export-variant</v-icon
+                  >
+                </template>
+                <span>Export Record </span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    medium
                     @click="setEnrollStatus(item)"
                     color="success"
                     class="ml-6"
@@ -531,7 +546,7 @@ export default {
       { text: "Card/SF9", value: "f1" },
       { text: "Birth Certificate", value: "f3" },
       { text: "Enroll Status", value: "status" },
-      { text: "Actions", value: "actions", sortable: false, width: 160 },
+      { text: "Actions", value: "actions", sortable: false, width: 200 },
     ],
     desserts: [],
     editedIndex: -1,
@@ -562,9 +577,16 @@ export default {
       "fetchEnrollsByBarangay",
       "exportToCsvEnrollByBarangay",
       "udpateEnrollStatus",
+      "exportEnroll",
     ]),
     displayImage(src) {
       return `http://localhost:7000/${src}`;
+    },
+    exportHandler(enroll) {
+      this.exportEnroll(enroll).then(() => {
+        const url = `http://localhost:7000/images/${enroll.b4}_${enroll.b5}_${enroll.b3}.docx`;
+        window.location.href = url;
+      });
     },
     viewImage(src) {
       this.dialog = true;

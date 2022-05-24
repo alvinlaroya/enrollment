@@ -64,6 +64,9 @@
                   <v-icon class="mr-2" color="blue" @click="editItem(item)">
                     mdi-printer-outline
                   </v-icon>
+                  <v-icon class="mr-2" color="blue" @click="editItem(item)">
+                    mdi-export-variant
+                  </v-icon>
                 </template>
                 <template v-slot:item.dateOfBirth="{ item }">
                   {{ dateFormat(item.dateOfBirth) }}

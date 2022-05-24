@@ -17,9 +17,11 @@ app.use(express.urlencoded({ extended: true }));
 // routers
 const userRoutes = require("./routes/user.js");
 const enrollRoutes = require("./routes/enroll.js");
+const studentRoutes = require("./routes/student.js");
 
 app.use("/api/user", userRoutes);
 app.use("/api/enroll/", enrollRoutes);
+app.use("/api/student/", studentRoutes);
 
 // static images folder
 app.use("/images", express.static("./images"));

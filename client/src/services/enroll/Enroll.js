@@ -15,6 +15,17 @@ export default {
     });
   }, */
 
+  async exportEnrollEvent(payload) {
+    return await axios.post(`${apiUrl}/enroll/exportEnroll`, payload, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    });
+  },
+
   async addEnrollEvent(payload) {
     return await axios.post(`${apiUrl}/enroll/addEnroll`, payload, {
       headers: {
@@ -61,6 +72,17 @@ export default {
 
   async exportToCsvByBarangayEvent(payload) {
     await axios.post(`${apiUrl}/enroll/exportToCsvByBarangay`, payload, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    });
+  },
+
+  async exportToCsvByGradeLevelEvent(payload) {
+    await axios.post(`${apiUrl}/enroll/exportToCsvByGradeLevel`, payload, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",

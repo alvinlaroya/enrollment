@@ -20,13 +20,20 @@
               >
                 <v-icon>mdi-printer-outline</v-icon>Print Preview
               </v-btn>
+              <v-btn
+                depressed
+                color="success"
+                class="mb-1 ml-2"
+                @click="exportHandler"
+              >
+                <v-icon>mdi-export-variant</v-icon>Export to CSV
+              </v-btn>
             </v-toolbar>
             <v-data-table
               :headers="headers"
               :items="allGradeEnrolled"
               sort-by="calories"
               class="elevation-1"
-              :search="search"
             >
               <template v-slot:[`item.f1`]="{ item }">
                 <v-chip class="ma-2" @click="viewImage(item.f1)">
@@ -48,7 +55,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-dialog v-model="printDialog" width="816">
+    <v-dialog v-model="printDialog" width="1056">
       <v-card>
         <v-card-text id="printMe">
           <br />
@@ -148,7 +155,89 @@ export default {
     ...mapNavigationGetters(["allGradeEnrolled"]),
   },
   methods: {
-    ...mapNavigationActions(["getSelectedGradeEnrolled"]),
+    ...mapNavigationActions([
+      "getSelectedGradeEnrolled",
+      "exportToCsvEnrollByGradeLevel",
+    ]),
+    exportHandler() {
+      var headers = {
+        a8: "LRN",
+        b4: "FIRST NAME",
+        b5: "MIDDLE NAME", // remove commas to avoid errors
+        b3: "LAST NAME",
+        b21: "BARANGAY",
+        b22: "MUNICIPALITY",
+        b23: "PROVINCE",
+        a16: "STRAND",
+      };
+
+      var fileTitle = `Grade ${this.$route.params.level} - ${new Date()}`; // or 'my-unique-title'
+
+      var itemsFormatted = [];
+
+      this.allGradeEnrolled.forEach((item) => {
+        itemsFormatted.push({
+          a8: item.a8,
+          b4: item.b4,
+          b5: item.b5,
+          b3: item.b3,
+          b21: item.b21,
+          b22: item.b22,
+          b23: item.b23,
+          a16: item.a16,
+        });
+      });
+
+      this.exportCSVFile(headers, itemsFormatted, fileTitle);
+    },
+    exportCSVFile(headers, items, fileTitle) {
+      if (headers) {
+        items.unshift(headers);
+      }
+
+      // Convert Object to JSON
+      var jsonObject = JSON.stringify(items);
+
+      var csv = this.convertToCSV(jsonObject);
+
+      var exportedFilenmae = fileTitle + ".csv" || "export.csv";
+
+      var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      if (navigator.msSaveBlob) {
+        // IE 10+
+        navigator.msSaveBlob(blob, exportedFilenmae);
+      } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) {
+          // feature detection
+          // Browsers that support HTML5 download attribute
+          var url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute("download", exportedFilenmae);
+          link.style.visibility = "hidden";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
+    },
+    convertToCSV(objArray) {
+      var array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
+      var str = "";
+
+      for (var i = 0; i < array.length; i++) {
+        var line = "";
+        for (var index in array[i]) {
+          if (line != "") line += ",";
+
+          line += array[i][index];
+        }
+
+        str += line + "\r\n";
+      }
+
+      return str;
+    },
   },
   mounted() {
     this.getSelectedGradeEnrolled(this.$route.params.level);

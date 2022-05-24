@@ -13,8 +13,13 @@ const db = require("../models");
 const multer = require("multer");
 const path = require("path");
 
+const PizZip = require("pizzip");
+const Docxtemplater = require("docxtemplater");
+const fs = require("fs");
+
 // MODEL
 const Enroll = db.enrolls;
+const Student = db.students;
 
 // UPLOAD
 const storage = multer.diskStorage({
@@ -43,6 +48,71 @@ const upload = multer({
   { name: "f3", maxCount: 1 },
   { name: "f4", maxCount: 1 },
 ]);
+
+const exportEnroll = async (req, res) => {
+  const content = fs.readFileSync(
+    path.resolve(__dirname, "../files/form.docx"),
+    "binary"
+  );
+
+  const zip = new PizZip(content);
+
+  const doc = new Docxtemplater(zip, {
+    paragraphLoop: true,
+    linebreaks: true,
+  });
+
+  const birthDate = new Date(req.body.b7).toLocaleString("default", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const c2_1 = req.body.c2.split(",", 2);
+
+  doc.render({
+    ...req.body,
+    a1_1: req.body.a1[0],
+    a1_2: req.body.a1[1],
+    a1_3: req.body.a1[2],
+    a1_4: req.body.a1[3],
+    a1_5: req.body.a1[5],
+    a1_6: req.body.a1[6],
+    a1_7: req.body.a1[7],
+    a1_8: req.body.a1[8],
+    a2_1: req.body.a2 ? "✓" : "",
+    a2_2: !req.body.a2 ? "✓" : "",
+    a3_1: req.body.a3 ? "✓" : "",
+    a10_1: req.body.a10 ? "✓" : "",
+    a10_2: !req.body.a10 ? "✓" : "",
+    b7_1: birthDate,
+    b9_1: req.body.b9 ? "✓" : "",
+    b9_2: !req.body.b9 ? "✓" : "",
+    b10_1: req.body.b10 ? "✓" : "",
+    b10_2: !req.body.b10 ? "✓" : "",
+    b14_1: req.body.b14 ? "✓" : "",
+    b14_2: !req.body.b14 ? "✓" : "",
+    b19_1: req.body.b19 ? req.body.b19 : "",
+    b16_1: req.body.b16 ? "✓" : "",
+    b16_2: !req.body.b16 ? "✓" : "",
+    c10_1: req.body.c10 ? "✓" : "",
+    c10_2: !req.body.c10 ? "✓" : "",
+    e1_1: req.body.e1 ? "✓" : "",
+    e1_2: !req.body.e1 ? "✓" : "",
+    c2_1: c2_1,
+  });
+
+  const buf = doc.getZip().generate({
+    type: "nodebuffer",
+    // compression: DEFLATE adds a compression step.
+    // For a 50MB output document, expect 500ms additional CPU time
+    compression: "DEFLATE",
+  });
+
+  const filename = `${req.body.b4}_${req.body.b5}_${req.body.b3}`;
+
+  fs.writeFileSync(path.resolve(__dirname, `../images/${filename}.docx`), buf);
+};
 
 // CREATE CLEARANCE
 const addEnroll = async (req, res) => {
@@ -210,7 +280,45 @@ const addEnroll = async (req, res) => {
     });
   } else {
     const enroll = await Enroll.create(param);
+    await Student.create({
+      lrn: param.a8,
+      fname: param.b4,
+      mname: param.b5,
+      lname: param.b3,
+      address: `${param.b20}. ${param.b21}, ${param.b22} ${param.b23}`,
+      email: param.b18,
+      religion: param.b13,
+    });
     res.status(200).send(enroll);
+
+    /*  lrn: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    fname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    mname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    religion: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }, */
   }
 };
 
@@ -232,6 +340,30 @@ const exportToCsvByBarangay = async (req, res) => {
 
   csvWriter
     .writeRecords(results)
+    .then(() => console.log("Data uploaded into csv successfully"));
+};
+
+const exportToCsvByGradeLevel = async (req, res) => {
+  const { gradeLevel, data } = req.body;
+
+  const csvWriter = createCsvWriter({
+    // Output csv file name is geek_data
+    path: `${gradeLevel}.csv`,
+    header: [
+      // Title of the columns (column_names)
+      { id: "a8", title: "LRN" },
+      { id: "b4", title: "FIRST NAME" },
+      { id: "b5", title: "MIDDLE NAME" },
+      { id: "b3", title: "LAST NAME" },
+      { id: "b21", title: "BARANGAY" },
+      { id: "b22", title: "MUNICIPALITY" },
+      { id: "b23", title: "PROVINCE" },
+      { id: "a16", title: "STRAND" },
+    ],
+  });
+
+  csvWriter
+    .writeRecords(data)
     .then(() => console.log("Data uploaded into csv successfully"));
 };
 
@@ -378,11 +510,13 @@ const updateEnrollStatus = async (req, res) => {
 };
 
 module.exports = {
+  exportEnroll,
   addEnroll,
   getAllEnrolls,
   getAllEnrollsByBarangay,
   getAllEnrollsPerLevel,
   exportToCsvByBarangay,
+  exportToCsvByGradeLevel,
   updateEnrollStatus,
   upload,
 };
