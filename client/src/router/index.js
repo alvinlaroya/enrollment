@@ -14,6 +14,7 @@ import EnrolledStudent from "@/views/navigation/EnrolledStudent.vue";
 import SelectedGradeLevel from "@/views/SelectedGradeLevel.vue";
 import UserManagement from "@/views/navigation/UserManagement.vue";
 import Profile from "@/views/navigation/Profile.vue";
+import Student from "@/views/navigation/Student.vue";
 
 // Forms
 import Enrollment from "@/views/enrollment_form/Form.vue";
@@ -106,6 +107,29 @@ const routes = [
           } else {
             next({ name: "auth.login" });
           }
+          next();
+        })
+        .catch(() => {
+          next({ name: "auth.login" });
+        });
+    },
+  },
+  {
+    path: "/student",
+    name: "navigation.student",
+    components: {
+      default: Student,
+      navbar: Navbar,
+    },
+    beforeEnter(to, from, next) {
+      Auth.isAuthenticated()
+        .then((response) => {
+          if (response) {
+            next(); // If authenticated, proceed with the redirect
+          } else {
+            next({ name: "auth.login" });
+          }
+          /* console.log(response.data) */
           next();
         })
         .catch(() => {

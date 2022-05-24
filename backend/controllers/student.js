@@ -4,6 +4,7 @@ const db = require("../models");
 
 // MODEL
 const Student = db.students;
+const Enroll = db.enrolls;
 
 const getAllStudents = async (req, res) => {
   let students = await Student.findAndCountAll({
@@ -17,19 +18,38 @@ const getAllStudents = async (req, res) => {
   });
 };
 
-// UPDATE CASE
-/* const updateCase = async (req, res) => {
-  const clearance = req.body;
+// UPDATE STUDENT
+const updateStudent = async (req, res) => {
+  const student = req.body;
 
-  await Case.update(clearance, {
+  await Student.update(student, {
     where: {
       id: req.params.id,
     },
   });
 
+  await Enroll.update(
+    {
+      b2: req.body.lrn,
+      b4: req.body.fname,
+      b5: req.body.mname,
+      b3: req.body.lname,
+      b18: req.body.email,
+      b13: req.body.religion,
+      a4: req.body.gradeLevel,
+      a5: req.body.previousGradeLevel,
+    },
+    {
+      where: {
+        b2: req.body.lrn,
+      },
+    }
+  );
+
   res.sendStatus(200);
 };
- */
+
 module.exports = {
   getAllStudents,
+  updateStudent,
 };

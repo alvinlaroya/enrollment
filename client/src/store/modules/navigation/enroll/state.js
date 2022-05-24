@@ -1,5 +1,6 @@
 export default {
   allEnrolls: [],
+  allStudents: [],
   enrolledStudents: [],
   selectedGradeEnrolled: [],
   count: 0,

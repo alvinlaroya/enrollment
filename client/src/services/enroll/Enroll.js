@@ -106,4 +106,28 @@ export default {
       }
     );
   },
+  async getStudentEvent() {
+    return await axios.get(`${apiUrl}/student/getAllStudents`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    });
+  },
+  async updateStudentEvent(payload) {
+    await axios.patch(
+      `${apiUrl}/student/updateStudent/${payload.id}`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      }
+    );
+  },
 };

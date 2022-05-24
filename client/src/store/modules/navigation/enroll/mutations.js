@@ -5,6 +5,10 @@ import {
 } from "../../../mutation-types";
 
 export default {
+  SET_ALL_STUDENT(state, data) {
+    state.allStudents = [];
+    state.allStudents = data;
+  },
   SET_ALL_ENROLL(state, data) {
     state.allEnrolls = [];
     state.allEnrolls = data;

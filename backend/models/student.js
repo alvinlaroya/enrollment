@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    gradeLevel: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    previousGradeLevel: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   });
 
   return Student;

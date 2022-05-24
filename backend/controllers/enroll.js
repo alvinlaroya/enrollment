@@ -281,13 +281,15 @@ const addEnroll = async (req, res) => {
   } else {
     const enroll = await Enroll.create(param);
     await Student.create({
-      lrn: param.a8,
+      lrn: param.b2,
       fname: param.b4,
       mname: param.b5,
       lname: param.b3,
       address: `${param.b20}. ${param.b21}, ${param.b22} ${param.b23}`,
       email: param.b18,
       religion: param.b13,
+      gradeLevel: param.a4,
+      previousGradeLevel: param.a5,
     });
     res.status(200).send(enroll);
 

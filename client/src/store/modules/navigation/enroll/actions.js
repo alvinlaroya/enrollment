@@ -97,3 +97,23 @@ export const udpateEnrollStatus = ({ commit }, payload) => {
       console.log(error);
     });
 };
+
+export const fetchStudent = ({ commit }, payload) => {
+  EventService.getStudentEvent(payload)
+    .then((response) => {
+      commit("SET_ALL_STUDENT", response.data.allStudents.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const updateStudent = ({ commit }, payload) => {
+  EventService.updateStudentEvent(payload)
+    .then((response) => {
+      /* commit("SET_ENROLL_STATUS", payload.id); */
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

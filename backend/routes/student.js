@@ -6,6 +6,7 @@ const router = require("express").Router();
 
 // routes
 router.get("/getAllStudents", studentController.getAllStudents);
+router.patch("/updateStudent/:id", studentController.updateStudent);
 
 /* function middleware(req, res, next) {
   const authHeader = req.headers["authorization"];
